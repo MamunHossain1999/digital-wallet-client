@@ -1,126 +1,106 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useRegisterMutation } from "@/features/auth/authApi";
 import { toast } from "react-toastify";
-import type { User } from "@/types/user"; // User type should have { name, email, password, role }
-import { useRegisterUserMutation } from "./authApi";
+import { useNavigate, Link } from "react-router-dom";
 
+type Role = "user" | "admin" | "agent";
 
-const RegisterPage: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState<User>({
+export default function Register() {
+  const [form, setForm] = useState<{
+    name: string;
+    email: string;
+    password: string;
+    role: Role;
+  }>({
     name: "",
     email: "",
     password: "",
-    role: "user", // default role
+    role: "user",
   });
-  const [error, setError] = useState<string | null>(null);
+
+  const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-
     try {
-      await registerUser(formData).unwrap(); // unwrap to get actual response
-      toast.success("Registered successfully!");
-      setFormData({ name: "", email: "", password: "", role: "user" });
+      await register(form).unwrap();
+      toast.success("Registration successful");
       navigate("/login");
-    } catch (err: any) {
-      setError(err?.data?.message || "Failed to register");
-      toast.error(err?.data?.message || "Failed to register");
+    } catch {
+      toast.error("Registration failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md p-6 bg-white shadow-md rounded">
-        <h2 className="text-2xl font-bold text-center mb-6">Register Wallet</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Create an Account 🚀
+        </h2>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <input
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Name"
+            type="text"
+            placeholder="Full Name"
+            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
             required
-            className="border px-3 py-2 rounded"
           />
 
+          {/* Email */}
           <input
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
+            placeholder="Email Address"
+            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             required
-            className="border px-3 py-2 rounded"
           />
 
-          <div className="relative">
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-              minLength={6}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-2 top-2 text-sm text-gray-600"
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
+          {/* Password */}
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
 
-          {/* Role Select */}
+          {/* Role Dropdown */}
           <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="border px-3 py-2 rounded"
+            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+            value={form.role}
+            onChange={(e) =>
+              setForm({ ...form, role: e.target.value as Role })
+            }
           >
             <option value="user">User</option>
             <option value="agent">Agent</option>
+            <option value="admin">Admin</option>
           </select>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="bg-amber-600 text-white py-2 rounded hover:bg-amber-500 disabled:opacity-50"
+            className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-lg py-3 font-medium transition"
           >
-            {isLoading ? "Registering..." : "Register"}
+            Register
           </button>
         </form>
 
-        <div className="my-4 text-center text-gray-400">OR</div>
-
-        <p className="mt-4 text-center text-gray-500">
+        <p className="mt-6 text-sm text-center text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-amber-600 hover:underline">
+          <Link
+            to="/login"
+            className="text-amber-600 hover:underline font-medium"
+          >
             Login
           </Link>
         </p>
       </div>
     </div>
   );
-};
-
-export default RegisterPage;
+}

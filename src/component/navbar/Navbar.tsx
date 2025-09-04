@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
             <>
               <li><Link to="/profile">Profile</Link></li>
               <li>
-                <button className="w-full text-left px-4 py-2 hover:bg-gray-100" onClick={logout}>Logout</button>
+                <button className="w-full text-left px-0 py-2 hover:bg-gray-100" onClick={logout}>Logout</button>
               </li>
             </>
           ) : (

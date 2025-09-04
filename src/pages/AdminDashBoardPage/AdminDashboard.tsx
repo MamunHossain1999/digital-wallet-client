@@ -5,7 +5,6 @@ import { FaUsers, FaWallet, FaExchangeAlt } from "react-icons/fa";
 import { useGetAllWalletsQuery } from "./allAdminApi/walletAdminApi";
 import { useGetAllTransactionsQuery } from "./allAdminApi/transactionAdminApi";
 
-
 import {
   PieChart,
   Pie,
@@ -25,8 +24,6 @@ interface User {
   role: "admin" | "user" | "agent";
   status: string;
 }
-
-
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -79,9 +76,9 @@ const AdminDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col p-6 bg-gray-50 min-h-screen space-y-8">
+    <div className="flex flex-col p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen space-y-8">
       {/* Header */}
-      <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Admin Dashboard</h1>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -119,8 +116,8 @@ const AdminDashboard: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Users by Role */}
-        <div className="p-6 bg-white rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Users by Role</h3>
+        <div className="p-4 sm:p-6 bg-white rounded-xl shadow-md">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Users by Role</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -142,8 +139,8 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Wallet Balances */}
-        <div className="p-6 bg-white rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Wallet Balances</h3>
+        <div className="p-4 sm:p-6 bg-white rounded-xl shadow-md overflow-x-auto">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Wallet Balances</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={walletBalancesData}>
               <XAxis dataKey="name" hide />
@@ -155,8 +152,8 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Transactions by Type */}
-        <div className="p-6 bg-white rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Transactions by Type</h3>
+        <div className="p-4 sm:p-6 bg-white rounded-xl shadow-md">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Transactions by Type</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -181,9 +178,9 @@ const AdminDashboard: React.FC = () => {
       {/* Recent Users & Transactions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Users */}
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Recent Users</h3>
-          <table className="w-full text-sm text-left">
+        <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 overflow-x-auto">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Recent Users</h3>
+          <table className="w-full text-sm text-left border-collapse">
             <thead className="bg-gray-100 text-gray-600">
               <tr>
                 <th className="p-2">Name</th>
@@ -204,9 +201,9 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Recent Transactions</h3>
-          <table className="w-full text-sm text-left">
+        <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 overflow-x-auto">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Recent Transactions</h3>
+          <table className="w-full text-sm text-left border-collapse">
             <thead className="bg-gray-100 text-gray-600">
               <tr>
                 <th className="p-2">Type</th>

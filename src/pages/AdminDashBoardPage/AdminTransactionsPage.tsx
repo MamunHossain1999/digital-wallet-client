@@ -25,7 +25,7 @@ const AdminTransactionsPage: React.FC = () => {
   if (isError) return <p className="p-6 text-red-600">Failed to load transactions</p>;
 
   return (
-    <div className="p-6">
+    <div className="">
       <h1 className="text-2xl font-semibold mb-4">All Transactions</h1>
 
       <div className="overflow-auto rounded-lg shadow">
@@ -64,38 +64,42 @@ const AdminTransactionsPage: React.FC = () => {
 
       {/* 🔹 Pagination Controls */}
       {txns.length > itemsPerPage && (
-        <div className="flex justify-center items-center mt-4 space-x-2">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-          >
-            Prev
-          </button>
+  <div className="flex flex-wrap justify-center items-center mt-4 gap-2 overflow-x-auto px-2">
+    {/* Previous Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+      disabled={currentPage === 1}
+      className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 whitespace-nowrap"
+    >
+      Prev
+    </button>
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 rounded ${
-                page === currentPage
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-800"
-              }`}
-            >
-              {page}
-            </button>
-          ))}
+    {/* Page Numbers */}
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      <button
+        key={page}
+        onClick={() => setCurrentPage(page)}
+        className={`px-3 py-1 rounded whitespace-nowrap ${
+          page === currentPage
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+        }`}
+      >
+        {page}
+      </button>
+    ))}
 
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
+    {/* Next Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+      disabled={currentPage === totalPages}
+      className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 whitespace-nowrap"
+    >
+      Next
+    </button>
+  </div>
+)}
+
     </div>
   );
 };

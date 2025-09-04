@@ -16,7 +16,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Features */}
-      <section className="py-20 px-8 md:px-20">
+      <section className="py-20 px-4 container mx-auto md:px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Our Core Values</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[

@@ -27,7 +27,9 @@ export const authApi = createApi({
       const token = (getState() as RootState).auth.user?.accessToken;
       if (token) headers.set("Authorization", `Bearer ${token}`);
       return headers;
+      
     },
+
   }),
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
@@ -36,18 +38,10 @@ export const authApi = createApi({
     register: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (body) => ({ url: "/api/auth/register", method: "POST", body }),
     }),
-    // logout: builder.mutation<{ message: string }, void>({
-    //   query: () => ({ url: "/api/auth/logout", method: "POST" }),
-    // }),
-    // getMe: builder.query<{ user: LoginResponse["user"] }, void>({
-    //   query: () => ({ url: "/api/auth/me", method: "GET" }),
-    // }),
   }),
 });
 
 export const {
   useLoginMutation,
   useRegisterMutation,
-  // useLogoutMutation,
-  // useGetMeQuery,
 } = authApi;

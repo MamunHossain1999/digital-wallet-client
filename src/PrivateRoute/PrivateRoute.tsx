@@ -5,6 +5,7 @@ import type { RootState } from "@/app/store";
 
 
 interface PrivateRouteProps {
+  allowedRoles: ("admin" | "user" | "agent")[];
   children: React.ReactNode;
 }
 

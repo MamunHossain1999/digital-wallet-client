@@ -7,7 +7,8 @@ import {
   FaPaperPlane, 
   FaHistory, 
   FaSignOutAlt, 
-  FaBackspace 
+  FaBackspace, 
+  FaUser
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "@/features/auth/authService";
@@ -86,6 +87,17 @@ const AgentSidebar: React.FC<AgentSidebarProps> = ({role}) => {
           <FaHistory /> Transactions
         </Link>
 
+         <Link
+          to="/agent/agent-profile"
+          className={`flex items-center gap-3 ${
+            location.pathname === "/agent/agent-profile"
+              ? "text-blue-600 font-semibold"
+              : "text-gray-700"
+          }`}
+        >
+          <FaUser /> Profile
+        </Link> 
+
         <Link
           to="/"
           className={`flex items-center gap-3 ${
@@ -100,7 +112,7 @@ const AgentSidebar: React.FC<AgentSidebarProps> = ({role}) => {
 
       {/* Logout */}
         <div className="p-4 border-t">
-        <button onClick={() => handleLogout(dispatch)} className="flex items-center gap-3 text-red-500 hover:text-red-600 w-full">
+        <button onClick={() => handleLogout(dispatch)} className="flex cursor-pointer items-center gap-3 text-red-500 hover:text-red-600 w-full">
           <FaSignOutAlt /> Logout
         </button>
       </div>

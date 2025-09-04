@@ -1,8 +1,8 @@
 import { handleLogout } from "@/features/auth/authService";
-import React from "react";
+import { CgProfile } from "react-icons/cg";
 import { FaHome, FaUser, FaWallet, FaExchangeAlt, FaSignOutAlt, FaBackspace } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 
 interface SidebarProps {
   role: "user" | "admin" | "agent";
@@ -12,11 +12,10 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
-  const logout = () => handleLogout(dispatch, navigate);
+
 
   return (
     <aside className="w-64 bg-white shadow-lg flex flex-col">
@@ -33,6 +32,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
 
         {role === "admin" && (
           <>
+            <Link
+              to="/admin/user-profile"
+              className={`flex items-center gap-3 ${
+                location.pathname === "/admin/user-profile" ? "text-blue-600 font-semibold" : "text-gray-700"
+              }`}
+            >
+              <CgProfile />Profile
+            </Link>
             <Link
               to="/admin/userTable"
               className={`flex items-center gap-3 ${
@@ -68,8 +75,8 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
           </>
         )}
       </nav>
-      <div className="p-4 border-t">
-        <button onClick={logout} className="flex items-center gap-3 text-red-500 hover:text-red-600 w-full">
+        <div className="p-4 border-t">
+        <button onClick={() => handleLogout(dispatch)} className="flex cursor-pointer items-center gap-3 text-red-500 hover:text-red-600 w-full">
           <FaSignOutAlt /> Logout
         </button>
       </div>

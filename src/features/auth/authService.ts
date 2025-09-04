@@ -18,12 +18,14 @@ export const fetchMe = async () => {
   }
 };
 
-export const handleLogout = async (dispatch: any, navigate: any) => {
+export const handleLogout = async (dispatch: any) => {
   try {
     await axios.post(`${baseURL}/api/auth/logout`, {}, { withCredentials: true });
     dispatch(clearUser());
     toast.success("Logged out");
-    navigate("/", { replace: true });
+
+    // নিশ্চিত absolute path
+    window.location.href = "/login";  // <-- এইটা সব sidebar থেকে নিশ্চিত login page এ যাবে
   } catch {
     toast.error("Logout failed");
   }

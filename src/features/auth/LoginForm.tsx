@@ -5,9 +5,11 @@ import { setUser } from "@/features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import GoogleLoginButton from "@/component/googleLogin/GoogleLoginButton";
+import { Eye, EyeOff } from "lucide-react"; // 👈 icon ব্যবহার করা হয়েছে
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); // 👈 state for toggle
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,35 +35,51 @@ export default function Login() {
         </h2>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} autoComplete="on" className="space-y-4">
+          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
               Email Address
             </label>
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
               value={form.email}
+              autoComplete="email"
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
             />
           </div>
 
+          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"} // 👈 toggle here
+                name="password"
+                placeholder="Enter your password"
+                className="w-full border rounded-lg p-3 pr-10 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                value={form.password}
+                autoComplete="current-password"
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-amber-600 cursor-pointer hover:bg-amber-500 text-white rounded-lg py-3 font-medium transition"

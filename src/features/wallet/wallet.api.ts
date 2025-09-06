@@ -11,7 +11,7 @@ export interface Wallet {
 export const walletApi = createApi({
   reducerPath: "walletApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/wallet",
+    baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/wallet`,
     credentials: "include", // 👈 cookie সহ পাঠাবে
   }),
   tagTypes: ["Wallet"],
@@ -42,7 +42,7 @@ export const walletApi = createApi({
 
     sendMoney: builder.mutation<
       { message: string },
-      { receiverEmail: string; amount: number }
+      { email: string; amount: number }
     >({
       query: (body) => ({
         url: `/send-money`,

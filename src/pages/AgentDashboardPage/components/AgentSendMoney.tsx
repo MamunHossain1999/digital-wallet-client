@@ -66,6 +66,20 @@ export default function AgentSendMoney() {
               autoComplete="off"               // amount shouldn't autocomplete
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
             />
+            
+            {/* Quick Amount Buttons */}
+            <div className="flex justify-center gap-2 mt-3">
+              {[100, 500, 1000, 2000, 5000].map((val) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setAmount(val)}
+                  className="px-3 py-1 bg-gray-100 border rounded-lg hover:bg-purple-100 text-sm font-medium transition-colors"
+                >
+                  {val}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Submit Button */}

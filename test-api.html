@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Send Money API Test</h1>
+    <button onclick="testSendMoney()">Test Send Money</button>
+    <div id="result"></div>
+
+    <script>
+        async function testSendMoney() {
+            const result = document.getElementById('result');
+            
+            try {
+                // Test the API endpoint
+                const response = await fetch('http://localhost:5000/api/wallet/send-money', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: 'test@example.com',
+                        amount: 100
+                    })
+                });
+                
+                const data = await response.text();
+                result.innerHTML = `<h3>Response Status: ${response.status}</h3><pre>${data}</pre>`;
+                
+            } catch (error) {
+                result.innerHTML = `<h3>Error:</h3><pre>${error.message}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>

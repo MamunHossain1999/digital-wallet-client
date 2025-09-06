@@ -8,8 +8,7 @@ export interface WithdrawRequest {
 
 export interface SendRequest {
   amount: number;
-  email:string;
-  recipientId: string;
+  email: string;
 }
 // src/types/transaction.ts
 export interface Transaction {

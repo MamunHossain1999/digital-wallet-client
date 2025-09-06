@@ -96,7 +96,9 @@ export default function Login() {
         </div>
 
         {/* Google Login */}
-        <GoogleLoginButton />
+        <div className="w-full">
+          <GoogleLoginButton />
+        </div>
 
         {/* Register Link */}
         <p className="mt-6 text-sm text-center text-gray-600">

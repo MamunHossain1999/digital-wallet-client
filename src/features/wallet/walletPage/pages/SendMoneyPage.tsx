@@ -17,7 +17,7 @@ const SendMoneyPage: React.FC = () => {
     }
 
     try {
-      await sendMoney({ receiverEmail, amount }).unwrap();
+      await sendMoney({ email: receiverEmail, amount }).unwrap();
       toast.success("Money sent successfully");
 
       setReceiverEmail("");
@@ -26,8 +26,9 @@ const SendMoneyPage: React.FC = () => {
 
       // success animation hide after 2s
       setTimeout(() => setSuccess(false), 2000);
-    } catch {
-      toast.error("Failed to send money");
+    } catch (error) {
+      console.error("Send money error:", error);
+      toast.error("Failed to send money. Check console for details.");
     }
   };
 
@@ -49,11 +50,14 @@ const SendMoneyPage: React.FC = () => {
         {/* Email Input */}
         <input
           type="email"
+          name="receiver-email"
           placeholder="Receiver Email"
           value={receiverEmail}
           onChange={(e) => setReceiverEmail(e.target.value)}
           className="w-full p-2 border rounded mb-4"
           autoComplete="email"
+          autoCapitalize="none"
+          spellCheck="false"
         />
 
         {/* Amount Input */}

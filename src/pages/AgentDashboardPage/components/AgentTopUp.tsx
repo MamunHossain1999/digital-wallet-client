@@ -52,6 +52,20 @@ export default function AgentTopUp() {
                        text-gray-700 shadow-sm"
             required
           />
+          
+          {/* Quick Amount Buttons */}
+          <div className="flex justify-center gap-2 mt-3">
+            {[500, 1000, 2000, 5000, 10000].map((val) => (
+              <button
+                key={val}
+                type="button"
+                onClick={() => setAmount(val)}
+                className="px-3 py-1 bg-gray-100 border rounded-lg hover:bg-blue-100 text-sm font-medium transition-colors"
+              >
+                {val}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Submit button */}

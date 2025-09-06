@@ -30,7 +30,7 @@ export const transactionApi = createApi({
     }),
     sendMoney: builder.mutation<Transaction, SendRequest>({
       query: (body) => ({
-        url: "/api/transaction/send",
+        url: "/api/wallet/send-money",
         method: "POST",
         body,
       }),

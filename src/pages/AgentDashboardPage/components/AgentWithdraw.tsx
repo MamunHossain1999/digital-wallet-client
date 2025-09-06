@@ -45,6 +45,20 @@ export default function AgentWithdraw() {
               placeholder="e.g. 1000"
               className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none transition text-gray-800"
             />
+            
+            {/* Quick Amount Buttons */}
+            <div className="flex justify-center gap-2 mt-3">
+              {[500, 1000, 2000, 5000, 10000].map((val) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setAmount(val)}
+                  className="px-3 py-1 bg-gray-100 border rounded-lg hover:bg-green-100 text-sm font-medium transition-colors"
+                >
+                  {val}
+                </button>
+              ))}
+            </div>
           </div>
 
           <button

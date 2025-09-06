@@ -1,0 +1,25 @@
+/* Google Login Button Full Width Fix */
+.google-login-container {
+  width: 100% !important;
+}
+
+.google-login-container > div {
+  width: 100% !important;
+}
+
+.google-login-container iframe {
+  width: 100% !important;
+  min-width: 384px !important;
+  max-width: 100% !important;
+}
+
+/* Override Google's iframe container */
+div[data-testid] {
+  width: 100% !important;
+}
+
+/* Force Google button to take full width */
+iframe[title="Sign in with Google button"] {
+  width: 100% !important;
+  min-width: 384px !important;
+}

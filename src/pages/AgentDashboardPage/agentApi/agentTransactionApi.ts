@@ -11,6 +11,7 @@ export const agentTransactionApi = createApi({
     baseUrl: url,
      credentials: "include",
   }),
+  tagTypes: ["Transactions", "AgentWallet", "AgentStats"],
   endpoints: (builder) => ({
     agentTopUp: builder.mutation({
       query: (body: { amount: number }) => ({
@@ -18,24 +19,44 @@ export const agentTransactionApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["AgentWallet", "Transactions"],
     }),
     agentWithdraw: builder.mutation({
       query: (body: { amount: number }) => ({
-        url: "/api/transaction/withdraw",
+        url: "/api/wallet/withdraw",
         method: "POST",
         body,
       }),
+      invalidatesTags: ["AgentWallet", "Transactions"],
     }),
     agentSendMoney: builder.mutation({
       query: (body: { email: string; amount: number }) => ({
-        url: "/api/transaction/send",
+        url: "/api/wallet/send-money",
         method: "POST",
         body,
       }),
+      invalidatesTags: ["AgentWallet", "Transactions"],
     }),
-   agentGetMyTransactions: builder.query<MyTransactionsResponse, void>({
-  query: () => "/api/transaction/history",
-}),
+    agentGetMyTransactions: builder.query<MyTransactionsResponse, void>({
+      query: () => "/api/transaction/history",
+      providesTags: ["Transactions"],
+    }),
+    
+    // Get agent wallet balance
+    getAgentWallet: builder.query<{ balance: number }, void>({
+      query: () => "/api/wallet/my",
+      providesTags: ["AgentWallet"],
+    }),
+    
+    // Get agent statistics
+    getAgentStats: builder.query<{
+      totalCustomers: number;
+      totalTransactions: number;
+      walletBalance: number;
+    }, void>({
+      query: () => "/api/agent/stats",
+      providesTags: ["AgentStats"],
+    }),
   }),
 });
 
@@ -44,4 +65,6 @@ export const {
   useAgentWithdrawMutation,
   useAgentSendMoneyMutation,
   useAgentGetMyTransactionsQuery,
+  useGetAgentWalletQuery,
+  useGetAgentStatsQuery,
 } = agentTransactionApi;

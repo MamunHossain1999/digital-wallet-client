@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "@/features/auth/authSlice";
+import "../../styles/google-button.css";
 
 const GoogleLoginButton = () => {
   const dispatch = useDispatch();
@@ -34,10 +35,20 @@ const GoogleLoginButton = () => {
   };
 
   return (
-    <GoogleLogin
-      onSuccess={handleGoogleLogin}
-      onError={() => toast.error("Google login failed")}
-    />
+    <div className="w-full google-login-container" style={{ width: '100%' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          onError={() => toast.error("Google login failed")}
+          width="384"
+          size="large"
+          theme="outline"
+          text="signin_with"
+          shape="rectangular"
+          logo_alignment="left"
+        />
+      </div>
+    </div>
   );
 };
 
